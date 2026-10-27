@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMB Region VII — EIA Coverage Screening Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"><img src="eia-logo.png" alt="" style="height:30px;width:auto"></span>
+    EMB REGION VII · EIA COVERAGE SCREENING ENGINE <span class="pulse"></span>
+  </div>
+  <div>MC 2014-005 · ANNEX A / B / C <button id="powBtn" onclick="powOpen()">POW Log (0)</button></div>
+</div>
+
+<div class="devstrip" id="devStrip">Early beta: more updates and upgrades are coming. Stay tuned! <button onclick="document.getElementById('devStrip').style.display='none'" aria-label="Close">&times;</button></div>
+
+<div class="hero">
+  <div class="contours" id="contourBg" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="hero-top-row">
+      <span class="hero-mark" aria-hidden="true"><img src="eia-logo.png" alt="EIA" style="height:84px;width:auto;background:#fff;border-radius:50%;padding:9px;box-shadow:0 8px 22px rgba(0,0,0,.28)"></span>
+      <div class="eyebrow">Coverage Screening &amp; Standardized Requirements</div>
+    </div>
+    <h1>EIA Coverage Screening</h1>
+    <p>Type the project. Get the category, the required document and the basis.</p>
+    <div class="legend"><span class="lg a">Category A &middot; EIS, Central Office</span><span class="lg b1">Category B &middot; EIS</span><span class="lg b2">Category B &middot; IEE Checklist</span><span class="lg c">Category C &middot; Enhancement</span><span class="lg d">Category D &middot; Not covered</span></div>
+  </div>
+</div>
+
+<div class="panel-wrap">
+  <div class="search-panel">
+    <div class="field-label">STEP 1 — DESCRIBE THE PROJECT <button onclick="resetAll()">Reset</button></div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input id="searchInput" type="text" placeholder="e.g. piggery, gas station, subdivision, cell tower, hospital..." autocomplete="off">
+      <div id="dropdown" class="dropdown"></div>
+    </div>
+    <div class="hint">Try it however it's actually said — "hog raising," "condo," "cutting timber" all work.</div>
+  </div>
+</div>
+
+<div class="stage">
+  <div id="welcome" class="welcome">
+    <div class="ex-label">Try one</div>
+    <div class="ex-row"><button onclick="tryEx('hog raising')">Hog raising</button><button onclick="tryEx('resort')">Resort</button><button onclick="tryEx('subdivision')">Subdivision</button><button onclick="tryEx('gas station')">Gas station</button><button onclick="tryEx('quarry')">Quarry</button><button onclick="tryEx('cell tower')">Cell tower</button><button onclick="tryEx('hospital')">Hospital</button><button onclick="tryEx('auto repair')">Auto repair shop</button></div>
+    <div class="steps3"><div><b>1</b><strong>Describe</strong>Type the project in your own words.</div><div><b>2</b><strong>Enter the size</strong>Area, capacity or length, with the unit buttons.</div><div><b>3</b><strong>Get the result</strong>Category, document, the reason, forms and where to apply.</div></div>
+  </div>
+  <div id="inputCard" class="input-card" style="display:none;"></div>
+  <div id="result" class="result"></div>
+
+  <div class="situational" id="situationalWrap" style="display:none;">
+    <div class="sit-toggle" onclick="toggleSituational()">▸ New, expansion, or special situation? (optional)</div>
+    <div class="sit-body" id="sitBody"></div>
+  </div>
+</div>
+
+<div class="devnote"><div class="devnote-in"><div class="devnote-ico">&#9998;</div><div><strong>A note from Akira</strong><p>I'm still racking my brain over how to keep developing this tool, so please bear with the design. It's still a beta, and updates and upgrades are on the way. Stay tuned!</p><p class="devnote-sub">Found a wrong or outdated result, or have an idea to make it better? Tell Akira.</p></div></div></div>
+<footer>
+  <div class="ref-title"><img src="eia-logo.png" alt="" style="height:30px;width:auto">Legal basis &amp; references</div>
+  <div class="ref-grid">
+    <div class="ref-col">
+      <div class="ref-col-h">Core screening rules</div>
+      <ul>
+        <li>Presidential Decree No. 1586 — Establishing the Philippine Environmental Impact Statement System (11 June 1978)</li>
+        <li>Presidential Proclamation No. 2146 — Environmentally Critical Projects and Areas (14 Dec 1981)</li>
+        <li>Presidential Proclamation No. 803 — Declaring Golf Course Projects as Environmentally Critical (1996)</li>
+        <li>DENR Administrative Order 2003-30 — Implementing Rules and Regulations of the PEIS System</li>
+        <li>DENR-EMB Memorandum Circular 2007-002 — EIA Revised Procedural Manual for DAO 2003-30</li>
+        <li><strong>EMB Memorandum Circular 005, series 2014</strong> — Revised Guidelines for Coverage Screening and Standardized Requirements (Annex A: Project Thresholds · Annex B: Modification Decision Chart · Annex C: Project Description pro-forma) — the primary source for every threshold in this tool</li>
+      </ul>
+    </div>
+    <div class="ref-col">
+      <div class="ref-col-h">Added project types &amp; areas</div>
+      <ul>
+        <li>DAO 2006-10 — Categories for sanitary landfill waste-handling capacity</li>
+        <li>DAO 2025-20, as amended by DAO 2025-30 — Floating Photovoltaic (floating solar) projects</li>
+        <li>DAO 2023-08, as amended by DAO 2024-05 — Floating Photovoltaic projects specifically within Laguna Lake</li>
+        <li>DAO 2026-09 — Enhanced ECC guidelines for Offshore Wind (supersedes DAO 2024-02); DAO 2025-25 — CDRA requirement for OSW and FPV EIS</li>
+        <li>DAO 2025-36, as amended by DAO 2026-23 — Streamlined ECC/CNC processing for Boracay Island</li>
+        <li>MC 2021-12 (steel as metal industries), MC 2022-06 (resorts/tourism thresholds), MC 2024-003 (water supply thresholds), MC 2020-27 (non-metallic extraction) — amend parts of Annex A; flagged on the affected results</li>
+        <li>MC 2020-31 (ECC 5-year validity); MC 2021-05 (minor amendments); DAO 2016-28 (fees); MC 2015-008 / 2022-002 (ECC Online, IEE Checklist)</li>
+        <li>DAO 2017-15 (public participation) as amended; DAO 2018-14 (reclamation area clearance) as amended; DMO 2025-01 (protected areas)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="ref-note"><strong>Internal working version &middot; updated 26 October 2026 &middot; EMB Region VII, EIA Section.</strong> Improvements are ongoing; please report wrong or outdated results to the section.<br>This tool is a screening aid built for EMB Region VII case handlers — it is not a substitute for the official issuances above. For binding determinations or anything flagged "unverified" in a result, confirm directly with EMB Region VII or the DENR-EMB central office.</div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+<script src="pow.js"></script>
+<script src="firebase-config.js"></script>
+<script src="online.js"></script>
+</body>
+</html>

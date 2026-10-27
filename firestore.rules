@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // A signed-in user is "staff" only if a document with their email exists in the "staff" collection.
+    function isStaff() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/staff/$(request.auth.token.email));
+    }
+
+    match /applicants/{id} {
+      allow read, create, update, delete: if isStaff();
+    }
+    match /counters/{id} {
+      allow read, write: if isStaff();
+    }
+    // Staff list can only be edited in the Firebase console.
+    match /staff/{id} {
+      allow read, write: if false;
+    }
+  }
+}
